@@ -1,0 +1,98 @@
+[
+  {
+    "id": "S10-01",
+    "nombre": "Registro valido",
+    "datos": {
+      "producto": "Leche",
+      "cantidad": "12",
+      "unidad": "litros",
+      "responsable": "Ana",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Exito: Registro valido"
+  },
+  {
+    "id": "S10-02",
+    "nombre": "Campo obligatorio vacio",
+    "datos": {
+      "producto": "",
+      "cantidad": "8",
+      "unidad": "kilos",
+      "responsable": "Luis",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Error: completar todos los campos"
+  },
+  {
+    "id": "S10-03",
+    "nombre": "Cantidad no numerica",
+    "datos": {
+      "producto": "Cafe",
+      "cantidad": "abc",
+      "unidad": "arrobas",
+      "responsable": "Marta",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Error: numero valido"
+  },
+  {
+    "id": "S10-04",
+    "nombre": "Cantidad negativa",
+    "datos": {
+      "producto": "Maiz",
+      "cantidad": "-5",
+      "unidad": "kilos",
+      "responsable": "Jorge",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Error: no puede ser negativa"
+  },
+  {
+    "id": "S10-05",
+    "nombre": "Cantidad en cero",
+    "datos": {
+      "producto": "Huevos",
+      "cantidad": "0",
+      "unidad": "unidades",
+      "responsable": "Diana",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Advertencia: cantidad registrada es cero"
+  },
+  {
+    "id": "S10-06",
+    "nombre": "Produccion baja",
+    "datos": {
+      "producto": "Leche",
+      "cantidad": "2",
+      "unidad": "litros",
+      "responsable": "Carlos",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Advertencia: produccion baja"
+  },
+  {
+    "id": "S10-07",
+    "nombre": "Cantidad inusualmente alta",
+    "datos": {
+      "producto": "Yuca",
+      "cantidad": "99999",
+      "unidad": "kilos",
+      "responsable": "Sofia",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Advertencia: inusualmente alta"
+  },
+  {
+    "id": "S10-08",
+    "nombre": "Responsable vacio",
+    "datos": {
+      "producto": "Maiz",
+      "cantidad": "35",
+      "unidad": "kilos",
+      "responsable": "",
+      "fecha": "2026-05-13"
+    },
+    "esperado": "Error: completar todos los campos"
+  }
+]

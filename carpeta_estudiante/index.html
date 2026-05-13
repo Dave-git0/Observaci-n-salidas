@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroSalida S10 | Observador de resultados</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">Semana 10 · Practica guiada</p>
+      <h1>AgroSalida S10</h1>
+      <p class="hero__subtitle">Observa resultados, interpreta mensajes y valida si el sistema cumple su objetivo funcional.</p>
+    </div>
+    <div class="hero__badge" aria-label="Estado del sistema">
+      <span id="estadoSistema">Sistema base</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="card objective-card">
+      <div>
+        <p class="section-label">Objetivo funcional</p>
+        <h2>Validar registros de produccion rural</h2>
+        <p>El sistema debe recibir datos de produccion, identificar errores o advertencias y mostrar una salida clara para el usuario.</p>
+      </div>
+      <ul class="objective-list">
+        <li>Comparar resultado esperado vs. resultado obtenido.</li>
+        <li>Interpretar mensajes de error, advertencia y exito.</li>
+        <li>Verificar si el objetivo se cumple.</li>
+      </ul>
+    </section>
+
+    <section class="grid two-columns">
+      <article class="card">
+        <p class="section-label">Prueba manual</p>
+        <h2>Formulario de registro</h2>
+        <form id="formRegistro" novalidate>
+          <div class="field">
+            <label for="producto">Producto</label>
+            <select id="producto" name="producto">
+              <option value="">Selecciona un producto</option>
+              <option value="Leche">Leche</option>
+              <option value="Maiz">Maiz</option>
+              <option value="Cafe">Cafe</option>
+              <option value="Huevos">Huevos</option>
+              <option value="Yuca">Yuca</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="cantidad">Cantidad</label>
+            <input id="cantidad" name="cantidad" type="text" placeholder="Ej: 12" />
+          </div>
+
+          <div class="field">
+            <label for="unidad">Unidad</label>
+            <select id="unidad" name="unidad">
+              <option value="">Selecciona una unidad</option>
+              <option value="litros">Litros</option>
+              <option value="kilos">Kilos</option>
+              <option value="unidades">Unidades</option>
+              <option value="arrobas">Arrobas</option>
+              <option value="bultos">Bultos</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="responsable">Responsable</label>
+            <input id="responsable" name="responsable" type="text" placeholder="Nombre del responsable" />
+          </div>
+
+          <div class="field">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" name="fecha" type="date" />
+          </div>
+
+          <div class="actions">
+            <button class="btn primary" type="submit">Evaluar registro</button>
+            <button class="btn secondary" type="button" id="btnEjemplo">Cargar ejemplo</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="card output-card" aria-live="polite">
+        <p class="section-label">Salida observada</p>
+        <h2>Panel de interpretacion</h2>
+        <div id="panelSalida" class="empty-state">
+          Ejecuta una prueba para observar la salida del sistema.
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Casos guiados</p>
+          <h2>Resultado esperado vs. resultado obtenido</h2>
+        </div>
+        <div class="actions compact">
+          <button class="btn primary" type="button" id="btnEjecutarCasos">Ejecutar casos guiados</button>
+          <button class="btn secondary" type="button" id="btnLimpiarHistorial">Limpiar historial</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Caso</th>
+              <th>Datos</th>
+              <th>Esperado</th>
+              <th>Obtenido</th>
+              <th>Validacion</th>
+            </tr>
+          </thead>
+          <tbody id="tablaCasos">
+            <tr>
+              <td colspan="5" class="muted">Ejecuta los casos guiados para comenzar la observacion.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="grid two-columns">
+      <article class="card">
+        <p class="section-label">Historial</p>
+        <h2>Acciones registradas</h2>
+        <div id="historial" class="history-list empty-state">Aun no hay acciones registradas.</div>
+      </article>
+
+      <article class="card">
+        <p class="section-label">Diagnostico tecnico</p>
+        <h2>Como interpretar</h2>
+        <ul class="diagnostic-list">
+          <li><strong>Error:</strong> el sistema no debe continuar porque el dato es invalido.</li>
+          <li><strong>Advertencia:</strong> el dato puede registrarse, pero conviene revisarlo.</li>
+          <li><strong>Exito:</strong> el dato cumple las condiciones esperadas.</li>
+          <li><strong>Objetivo validado:</strong> la salida coincide con lo esperado.</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Actividad academica · Unidad 2 · Observacion de resultados y salidas</p>
+  </footer>
+</body>
+</html>

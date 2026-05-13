@@ -1,0 +1,23 @@
+# Material docente privado
+carpeta_profesor/
+README_SOLO_PROFESOR.md
+
+# Comprimidos y copias
+*.zip
+*.rar
+*.7z
+*_backup*/
+*_copia*/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Dependencias eventuales
+node_modules/
+dist/
+build/
