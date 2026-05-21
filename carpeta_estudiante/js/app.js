@@ -3,7 +3,7 @@ const CASOS_GUIADOS = [
     id: 'S10-01',
     nombre: 'Registro valido',
     datos: { producto: 'Leche', cantidad: '12', unidad: 'litros', responsable: 'Ana', fecha: '2026-05-13' },
-    esperado: { tipo: 'exito', textoClave: 'Registro valido' }
+    esperado: { tipo: 'exito', textoClave: 'registro valido' }
   },
   {
     id: 'S10-02',
@@ -59,24 +59,28 @@ function iniciarAplicacion() {
   document.getElementById('btnEjemplo').addEventListener('click', cargarEjemplo);
   document.getElementById('btnEjecutarCasos').addEventListener('click', ejecutarCasosGuiados);
   document.getElementById('btnLimpiarHistorial').addEventListener('click', limpiarHistorial);
+
   renderHistorial();
-  console.info('AgroSalida S10 cargado. Abre la tabla de casos guiados para observar salidas.');
+
+  console.info('AgroSalida S10 cargado correctamente.');
 }
 
 function manejarEnvioFormulario(event) {
   event.preventDefault();
+
   const datos = leerFormulario();
   const resultado = evaluarRegistro(datos);
+
   mostrarSalida(resultado, datos);
   agregarHistorial('Prueba manual', datos, resultado);
 }
 
 function leerFormulario() {
   return {
-    producto: document.getElementById('producto').value,
-    cantidad: document.getElementById('cantidad').value,
-    unidad: document.getElementById('unidad').value,
-    responsable: document.getElementById('responsable').value,
+    producto: document.getElementById('producto').value.trim(),
+    cantidad: document.getElementById('cantidad').value.trim(),
+    unidad: document.getElementById('unidad').value.trim(),
+    responsable: document.getElementById('responsable').value.trim(),
     fecha: document.getElementById('fecha').value
   };
 }
@@ -89,21 +93,30 @@ function cargarEjemplo() {
   document.getElementById('fecha').value = new Date().toISOString().slice(0, 10);
 }
 
-// TODO-S10-A: Mejorar esta funcion para que las salidas sean especificas y cumplan los casos esperados.
-// [BLOQUE-S10-A-INICIO]
 function evaluarRegistro(datos) {
-  const camposVacios = Object.values(datos).some(valor => String(valor).trim() === '');
+  const camposVacios = Object.values(datos).some(
+    valor => String(valor).trim() === ''
+  );
 
   if (camposVacios) {
     return crearResultado(
       'error',
-      'Falta informacion en el registro.',
-      'El sistema detecto que falta algun dato, pero el mensaje aun puede ser mas claro.',
+      'Debe completar todos los campos obligatorios.',
+      'El sistema detecto informacion faltante y no puede continuar.',
       false
     );
   }
 
   const cantidad = Number(datos.cantidad);
+
+  if (isNaN(cantidad)) {
+    return crearResultado(
+      'error',
+      'La cantidad debe ser un numero valido.',
+      'El sistema detecto letras o valores invalidos en la cantidad.',
+      false
+    );
+  }
 
   if (cantidad < 0) {
     return crearResultado(
@@ -114,23 +127,40 @@ function evaluarRegistro(datos) {
     );
   }
 
+  if (cantidad === 0) {
+    return crearResultado(
+      'advertencia',
+      'La cantidad registrada es cero.',
+      'El sistema permite el registro, pero recomienda revisar el dato.',
+      true
+    );
+  }
+
+  if (cantidad <= 3) {
+    return crearResultado(
+      'advertencia',
+      'La produccion baja debe revisarse.',
+      'La cantidad ingresada es menor a la esperada.',
+      true
+    );
+  }
+
   if (cantidad > 50000) {
     return crearResultado(
       'advertencia',
-      'Dato alto. Revise el registro.',
-      'El sistema permite continuar, pero recomienda verificar la informacion.',
+      'Cantidad inusualmente alta, revise el registro.',
+      'El sistema detecto una cantidad fuera del rango normal.',
       true
     );
   }
 
   return crearResultado(
     'exito',
-    'Registro procesado.',
-    'El sistema acepto la informacion, pero el mensaje puede ser mas especifico.',
+    'Registro valido procesado correctamente.',
+    'El sistema valido el registro y cumple el objetivo funcional.',
     true
   );
 }
-// [BLOQUE-S10-A-FIN]
 
 function crearResultado(tipo, mensaje, interpretacion, objetivoCumplido) {
   return {
@@ -142,38 +172,49 @@ function crearResultado(tipo, mensaje, interpretacion, objetivoCumplido) {
   };
 }
 
-// TODO-S10-B: Mejorar la validacion para comparar tipo y texto clave esperado.
-// [BLOQUE-S10-B-INICIO]
 function validarObjetivo(esperado, resultado) {
-  const coincideTipo = esperado.tipo === resultado.tipo;
-  const coincideTexto = resultado.mensaje.toLowerCase().includes(esperado.textoClave.toLowerCase());
+  const coincideTipo =
+    esperado.tipo.toLowerCase() === resultado.tipo.toLowerCase();
+
+  const coincideTexto =
+    resultado.mensaje.toLowerCase().includes(
+      esperado.textoClave.toLowerCase()
+    );
+
   return coincideTipo && coincideTexto;
 }
-// [BLOQUE-S10-B-FIN]
 
 function mostrarSalida(resultado, datos) {
   const panel = document.getElementById('panelSalida');
+
   panel.className = 'result-panel';
+
   panel.innerHTML = `
     <span class="badge ${resultado.tipo}">${resultado.tipo}</span>
+
     <p class="result-message">${resultado.mensaje}</p>
+
     <p>${resultado.interpretacion}</p>
+
     <div class="meta-grid">
       <div class="meta-box">
         <span>Producto</span>
         <strong>${datos.producto || 'No registrado'}</strong>
       </div>
+
       <div class="meta-box">
         <span>Cantidad</span>
         <strong>${datos.cantidad || 'No registrada'} ${datos.unidad || ''}</strong>
       </div>
+
       <div class="meta-box">
         <span>Responsable</span>
         <strong>${datos.responsable || 'No registrado'}</strong>
       </div>
+
       <div class="meta-box">
         <span>Objetivo</span>
-        <strong>${resultado.objetivoCumplido ? 'Cumple parcialmente' : 'No cumple'}</strong>
+        <strong>${resultado.objetivoCumplido ? 'Cumple' : 'No cumple'}</strong>
       </div>
     </div>
   `;
@@ -181,23 +222,42 @@ function mostrarSalida(resultado, datos) {
 
 function ejecutarCasosGuiados() {
   const tbody = document.getElementById('tablaCasos');
+
   const filas = CASOS_GUIADOS.map(caso => {
     const resultado = evaluarRegistro(caso.datos);
+
     const cumple = validarObjetivo(caso.esperado, resultado);
+
     agregarHistorial(caso.id, caso.datos, resultado, cumple);
 
     return `
       <tr>
-        <td><strong>${caso.id}</strong><br><span class="muted">${caso.nombre}</span></td>
+        <td>
+          <strong>${caso.id}</strong><br>
+          <span class="muted">${caso.nombre}</span>
+        </td>
+
         <td>${formatearDatos(caso.datos)}</td>
-        <td><strong>${caso.esperado.tipo}</strong><br>${caso.esperado.textoClave}</td>
-        <td><strong>${resultado.tipo}</strong><br>${resultado.mensaje}</td>
-        <td class="${cumple ? 'status-pass' : 'status-fail'}">${cumple ? 'Cumple' : 'No cumple'}</td>
+
+        <td>
+          <strong>${caso.esperado.tipo}</strong><br>
+          ${caso.esperado.textoClave}
+        </td>
+
+        <td>
+          <strong>${resultado.tipo}</strong><br>
+          ${resultado.mensaje}
+        </td>
+
+        <td class="${cumple ? 'status-pass' : 'status-fail'}">
+          ${cumple ? 'Cumple' : 'No cumple'}
+        </td>
       </tr>
     `;
   }).join('');
 
   tbody.innerHTML = filas;
+
   renderHistorial();
 }
 
@@ -218,8 +278,11 @@ function agregarHistorial(origen, datos, resultado, cumple = null) {
     cumple,
     fecha: new Date().toLocaleTimeString('es-CO')
   });
+
   historial = historial.slice(0, 12);
+
   guardarHistorial();
+
   renderHistorial();
 }
 
@@ -233,6 +296,7 @@ function renderHistorial() {
   }
 
   contenedor.className = 'history-list';
+
   contenedor.innerHTML = historial.map(item => `
     <div class="history-item">
       <strong>${item.origen} · ${item.resultado.tipo}</strong>
@@ -256,7 +320,16 @@ function guardarHistorial() {
 
 function limpiarHistorial() {
   historial = [];
+
   guardarHistorial();
+
   renderHistorial();
-  document.getElementById('tablaCasos').innerHTML = '<tr><td colspan="5" class="muted">Historial limpio. Ejecuta los casos guiados para comenzar de nuevo.</td></tr>';
+
+  document.getElementById('tablaCasos').innerHTML = `
+    <tr>
+      <td colspan="5" class="muted">
+        Historial limpio. Ejecuta los casos guiados para comenzar de nuevo.
+      </td>
+    </tr>
+  `;
 }
