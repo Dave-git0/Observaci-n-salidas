@@ -1,4 +1,5 @@
 :root {
+<<<<<<< HEAD
   --bg: #f3f6f1;
   --surface: #ffffff;
   --surface-strong: #f8faf5;
@@ -16,6 +17,19 @@
   --border: #d9e2d6;
   --shadow: 0 20px 50px rgba(24, 48, 28, 0.10);
   --radius: 22px;
+=======
+  --fondo: #f3f7ee;
+  --panel: #ffffff;
+  --texto: #17311d;
+  --muted: #5f6f63;
+  --borde: #d9e3d2;
+  --primario: #2f7d32;
+  --primario-oscuro: #1e5b22;
+  --error: #b42318;
+  --advertencia: #9a6700;
+  --exito: #1a7f37;
+  --info: #0969da;
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
 }
 
 * {
@@ -25,6 +39,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+<<<<<<< HEAD
   background: radial-gradient(circle at top left, #e5f6dd, transparent 34rem), var(--bg);
   color: var(--text);
   line-height: 1.55;
@@ -130,10 +145,57 @@ body {
 
 .field {
   margin-bottom: 1rem;
+=======
+  background: var(--fondo);
+  color: var(--texto);
+}
+
+.app {
+  width: min(1100px, 94%);
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #1f6b2a, #8fb339);
+  color: white;
+  padding: 28px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.hero h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.etiqueta {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 20px;
+  margin-top: 20px;
+  box-shadow: 0 8px 24px rgba(24, 49, 29, 0.08);
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
 }
 
 label {
   display: block;
+<<<<<<< HEAD
   font-weight: 700;
   margin-bottom: .4rem;
 }
@@ -276,16 +338,104 @@ select:focus {
   overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: 18px;
+=======
+  margin-top: 14px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  font-size: 1rem;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--primario);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--primario-oscuro);
+}
+
+button.secundario {
+  background: #385f8a;
+}
+
+button.fantasma {
+  background: #e7eee3;
+  color: var(--texto);
+}
+
+.salida {
+  min-height: 90px;
+  border: 1px dashed var(--borde);
+  border-radius: 14px;
+  padding: 14px;
+  background: #f8faf7;
+  white-space: pre-line;
+}
+
+/* TODO-S10-CSS-01: Agrega clases visuales para salida de error, advertencia, éxito e información. */
+/* Sugerencia: usa las variables --error, --advertencia, --exito y --info. */
+
+.salida.error {
+  border-color: var(--error);
+  background: #fff1f0;
+  color: var(--error);
+}
+
+.salida.advertencia {
+  border-color: var(--advertencia);
+  background: #fff8db;
+  color: var(--advertencia);
+}
+
+.salida.exito {
+  border-color: var(--exito);
+  background: #ecfdf3;
+  color: var(--exito);
+}
+
+.salida.info {
+  border-color: var(--info);
+  background: #eef6ff;
+  color: var(--info);
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+<<<<<<< HEAD
   min-width: 820px;
+=======
+  margin-top: 12px;
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
 }
 
 th,
 td {
+<<<<<<< HEAD
   text-align: left;
   vertical-align: top;
   padding: .85rem;
@@ -351,6 +501,20 @@ tr:last-child td {
   }
 
   .meta-grid {
+=======
+  border: 1px solid var(--borde);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #e8f1e3;
+}
+
+@media (max-width: 780px) {
+  .layout {
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
     grid-template-columns: 1fr;
   }
 }

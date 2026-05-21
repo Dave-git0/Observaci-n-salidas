@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
   <title>AgroSalida S10 | Observador de resultados</title>
   <link rel="stylesheet" href="css/styles.css" />
   <script src="js/app.js" defer></script>
@@ -106,10 +107,75 @@
       </div>
 
       <div class="table-wrap">
+=======
+  <title>Validador de Salidas Rurales</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <p class="etiqueta">Semana 10 · Unidad 2</p>
+      <h1>Validador de Salidas Rurales</h1>
+      <p>
+        Observa resultados, interpreta mensajes y valida si el sistema cumple el objetivo esperado.
+      </p>
+    </header>
+
+    <section class="panel objetivo">
+      <h2>Objetivo funcional del sistema</h2>
+      <p id="objetivoTexto">
+        Validar registros de producción rural y mostrar una salida clara de error, advertencia o éxito.
+      </p>
+    </section>
+
+    <section class="layout">
+      <form class="panel formulario" id="formRegistro">
+        <h2>Datos de prueba</h2>
+
+        <label for="dia">Día o fecha</label>
+        <input type="text" id="dia" placeholder="Ejemplo: Lunes" />
+
+        <label for="leche">Litros de leche</label>
+        <input type="text" id="leche" placeholder="Ejemplo: 10" />
+
+        <label for="maiz">Kilos de maíz</label>
+        <input type="text" id="maiz" placeholder="Ejemplo: 20" />
+
+        <label for="responsable">Responsable</label>
+        <input type="text" id="responsable" placeholder="Ejemplo: Ana" />
+
+        <div class="acciones">
+          <button type="button" id="btnValidar">Validar salida</button>
+          <button type="button" id="btnCasos" class="secundario">Ejecutar casos de prueba</button>
+          <button type="button" id="btnLimpiar" class="fantasma">Limpiar</button>
+        </div>
+      </form>
+
+      <section class="panel resultado">
+        <h2>Salida generada</h2>
+        <div id="salidaSistema" class="salida">Aún no se ha ejecutado ninguna prueba.</div>
+
+        <h3>Interpretación del mensaje</h3>
+        <p id="interpretacion">Pendiente por analizar.</p>
+
+        <h3>Validación del objetivo</h3>
+        <p id="validacionObjetivo">Pendiente por validar.</p>
+      </section>
+    </section>
+
+    <!-- TODO-S10-HTML-01: Esta tabla se usará para comparar resultado esperado vs. resultado obtenido. -->
+    <section class="panel">
+      <h2>Tabla de casos de prueba</h2>
+      <p>
+        Ejecuta los casos y revisa si el sistema cumple el objetivo funcional.
+      </p>
+      <div class="tabla-contenedor">
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
         <table>
           <thead>
             <tr>
               <th>Caso</th>
+<<<<<<< HEAD
               <th>Datos</th>
               <th>Esperado</th>
               <th>Obtenido</th>
@@ -119,11 +185,24 @@
           <tbody id="tablaCasos">
             <tr>
               <td colspan="5" class="muted">Ejecuta los casos guiados para comenzar la observacion.</td>
+=======
+              <th>Entrada</th>
+              <th>Esperado</th>
+              <th>Obtenido</th>
+              <th>¿Cumple?</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody id="tablaPruebas">
+            <tr>
+              <td colspan="6">Sin pruebas ejecutadas.</td>
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
             </tr>
           </tbody>
         </table>
       </div>
     </section>
+<<<<<<< HEAD
 
     <section class="grid two-columns">
       <article class="card">
@@ -148,5 +227,10 @@
   <footer class="footer">
     <p>Actividad academica · Unidad 2 · Observacion de resultados y salidas</p>
   </footer>
+=======
+  </main>
+
+  <script src="js/app.js"></script>
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
 </body>
 </html>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Material docente privado
 carpeta_profesor/
 README_SOLO_PROFESOR.md
@@ -21,3 +22,20 @@ desktop.ini
 node_modules/
 dist/
 build/
+=======
+# Material privado del docente
+carpeta_profesor/
+**/*SOLO_PROFESOR*
+
+# Archivos temporales
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+
+# Configuración local
+.vscode/
+.idea/
+.env
+.env.*
+>>>>>>> ae3212515eacf55f2f37f9d4c917517da03cc701
