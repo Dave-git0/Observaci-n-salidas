@@ -122,6 +122,30 @@ button.fantasma {
 /* TODO-S10-CSS-01: Agrega clases visuales para salida de error, advertencia, éxito e información. */
 /* Sugerencia: usa las variables --error, --advertencia, --exito y --info. */
 
+.salida.error {
+  border-color: var(--error);
+  background: #fff1f0;
+  color: var(--error);
+}
+
+.salida.advertencia {
+  border-color: var(--advertencia);
+  background: #fff8db;
+  color: var(--advertencia);
+}
+
+.salida.exito {
+  border-color: var(--exito);
+  background: #ecfdf3;
+  color: var(--exito);
+}
+
+.salida.info {
+  border-color: var(--info);
+  background: #eef6ff;
+  color: var(--info);
+}
+
 .tabla-contenedor {
   overflow-x: auto;
 }

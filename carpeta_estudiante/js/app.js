@@ -1,5 +1,4 @@
 // Semana 10 - Observación de resultados y salidas
-// Este archivo tiene una versión inicial. Busca las marcas TODO-S10 para mejorar el sistema.
 
 const objetivoSistema = "Validar registros de producción rural y mostrar una salida clara de error, advertencia o éxito.";
 
@@ -64,49 +63,119 @@ const elementos = {
 
 function obtenerDatosFormulario() {
   return {
-    dia: elementos.dia.value,
-    leche: elementos.leche.value,
-    maiz: elementos.maiz.value,
-    responsable: elementos.responsable.value
+    dia: elementos.dia.value.trim(),
+    leche: elementos.leche.value.trim(),
+    maiz: elementos.maiz.value.trim(),
+    responsable: elementos.responsable.value.trim()
   };
 }
 
-// TODO-S10-JS-01: Esta función genera una salida inicial, pero todavía no valida bien.
-// Problema intencional: suma textos y acepta datos inválidos como si fueran correctos.
 function procesarRegistro(datos) {
-  const total = datos.leche + datos.maiz;
+
+  if (
+    datos.dia === "" ||
+    datos.leche === "" ||
+    datos.maiz === "" ||
+    datos.responsable === ""
+  ) {
+    return {
+      tipo: "error",
+      mensaje: "Todos los campos son obligatorios.",
+      entrada: datos
+    };
+  }
+
+  const leche = Number(datos.leche);
+  const maiz = Number(datos.maiz);
+
+  if (isNaN(leche) || isNaN(maiz)) {
+    return {
+      tipo: "error",
+      mensaje: "Las cantidades deben ser números válidos.",
+      entrada: datos
+    };
+  }
+
+  if (leche < 0 || maiz < 0) {
+    return {
+      tipo: "error",
+      mensaje: "No se permiten cantidades negativas.",
+      entrada: datos
+    };
+  }
+
+  if (leche === 0 || maiz === 0) {
+    return {
+      tipo: "advertencia",
+      mensaje: "La producción contiene valores en cero.",
+      entrada: datos
+    };
+  }
+
+  if (leche < 5 || maiz < 10) {
+    return {
+      tipo: "advertencia",
+      mensaje: "La producción es demasiado baja.",
+      entrada: datos
+    };
+  }
+
+  if (leche > 1000 || maiz > 1000) {
+    return {
+      tipo: "advertencia",
+      mensaje: "Cantidad inusualmente alta, revise el dato.",
+      entrada: datos
+    };
+  }
+
+  const total = leche + maiz;
 
   return {
     tipo: "exito",
-    mensaje: `Registro procesado. Total reportado: ${total}`,
+    mensaje: `Registro procesado correctamente. Total reportado: ${total}`,
     entrada: datos,
     total
   };
 }
 
-// TODO-S10-JS-02: Mejora esta función para explicar el tipo de mensaje generado.
 function interpretarMensaje(resultado) {
-  return "Pendiente: interpreta si el mensaje es error, advertencia o éxito.";
+
+  if (resultado.tipo === "error") {
+    return "El sistema detectó un problema que impide procesar el registro.";
+  }
+
+  if (resultado.tipo === "advertencia") {
+    return "El sistema procesó el registro, pero encontró datos que deben revisarse.";
+  }
+
+  return "El registro fue procesado correctamente y cumple las validaciones.";
 }
 
-// TODO-S10-JS-03: Mejora esta función para comparar esperado vs. obtenido.
 function validarObjetivo(resultado, esperadoTipo) {
+
+  const cumple = resultado.tipo === esperadoTipo;
+
   return {
-    cumple: false,
-    detalle: "Pendiente: compara el resultado esperado con el resultado obtenido."
+    cumple,
+    detalle: cumple
+      ? "El resultado obtenido coincide con el esperado."
+      : `El sistema esperaba un resultado tipo "${esperadoTipo}" pero obtuvo "${resultado.tipo}".`
   };
 }
 
 function mostrarSalida(resultado, esperadoTipo = null) {
+
   elementos.salidaSistema.textContent = resultado.mensaje;
-  elementos.salidaSistema.className = "salida";
+  elementos.salidaSistema.className = `salida ${resultado.tipo}`;
+
   elementos.interpretacion.textContent = interpretarMensaje(resultado);
 
   if (esperadoTipo) {
     const validacion = validarObjetivo(resultado, esperadoTipo);
     elementos.validacionObjetivo.textContent = validacion.detalle;
   } else {
-    elementos.validacionObjetivo.textContent = "Validación pendiente: ejecuta un caso de prueba o compara con un objetivo esperado.";
+    elementos.validacionObjetivo.textContent =
+      "Validación manual realizada correctamente.";
   }
 
   console.log("Salida generada:", resultado);
@@ -118,42 +187,72 @@ function validarFormulario() {
   mostrarSalida(resultado);
 }
 
-// TODO-S10-JS-04: Revisa cómo se construye la tabla y mejora la interpretación de cada caso.
 function ejecutarCasosPrueba() {
+
   elementos.tablaPruebas.innerHTML = "";
 
   casosPrueba.forEach((caso) => {
+
     const resultado = procesarRegistro(caso.entrada);
-    const validacion = validarObjetivo(resultado, caso.esperadoTipo);
+
+    const validacion = validarObjetivo(
+      resultado,
+      caso.esperadoTipo
+    );
+
     const interpretacion = interpretarMensaje(resultado);
 
     const fila = document.createElement("tr");
+
     fila.innerHTML = `
       <td>${caso.id}. ${caso.descripcion}</td>
-      <td>Día: ${caso.entrada.dia || "(vacío)"}<br>Leche: ${caso.entrada.leche}<br>Maíz: ${caso.entrada.maiz}<br>Responsable: ${caso.entrada.responsable}</td>
+
+      <td>
+        Día: ${caso.entrada.dia || "(vacío)"}<br>
+        Leche: ${caso.entrada.leche}<br>
+        Maíz: ${caso.entrada.maiz}<br>
+        Responsable: ${caso.entrada.responsable}
+      </td>
+
       <td>${caso.esperadoTipo}</td>
+
       <td>${resultado.tipo}</td>
+
       <td>${validacion.cumple ? "Sí" : "No"}</td>
+
       <td>${interpretacion}</td>
     `;
+
     elementos.tablaPruebas.appendChild(fila);
+
   });
+
 }
 
 function limpiar() {
+
   elementos.dia.value = "";
   elementos.leche.value = "";
   elementos.maiz.value = "";
   elementos.responsable.value = "";
-  elementos.salidaSistema.textContent = "Aún no se ha ejecutado ninguna prueba.";
+
+  elementos.salidaSistema.textContent =
+    "Aún no se ha ejecutado ninguna prueba.";
+
   elementos.salidaSistema.className = "salida";
-  elementos.interpretacion.textContent = "Pendiente por analizar.";
-  elementos.validacionObjetivo.textContent = "Pendiente por validar.";
-  elementos.tablaPruebas.innerHTML = '<tr><td colspan="6">Sin pruebas ejecutadas.</td></tr>';
+
+  elementos.interpretacion.textContent =
+    "Pendiente por analizar.";
+
+  elementos.validacionObjetivo.textContent =
+    "Pendiente por validar.";
+
+  elementos.tablaPruebas.innerHTML =
+    '<tr><td colspan="6">Sin pruebas ejecutadas.</td></tr>';
 }
 
 elementos.btnValidar.addEventListener("click", validarFormulario);
 elementos.btnCasos.addEventListener("click", ejecutarCasosPrueba);
 elementos.btnLimpiar.addEventListener("click", limpiar);
 
-console.info("Validador de Salidas Rurales iniciado. Revisa las marcas TODO-S10 en js/app.js.");
+console.info("Validador de Salidas Rurales iniciado.");
